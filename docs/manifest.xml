@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<OfficeApp
+  xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+  xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides"
+  xsi:type="TaskPaneApp">
+
+  <Id>8b5b9c3a-1c1e-4b88-9b11-aaaaaaaaaaaa</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>My Company</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="My View Add-in"/>
+  <Description DefaultValue="Adds a 'My View' tab with buttons for personal column layouts."/>
+
+  <SupportUrl DefaultValue="https://example.com"/>
+
+  <AppDomains>
+    <AppDomain>https://e11903660.github.io/my-view-repository</AppDomain>
+  </AppDomains>
+
+  <Hosts>
+    <Host Name="Workbook"/>
+  </Hosts>
+
+  <!-- Not used in this minimal setup, but required by the schema -->
+  <DefaultSettings>
+    <SourceLocation DefaultValue="https://e11903660.github.io/my-view-repository/taskpane.html"/>
+  </DefaultSettings>
+
+  <Permissions>ReadWriteDocument</Permissions>
+
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="VersionOverridesV1_0">
+    <Hosts>
+      <Host xsi:type="Workbook">
+        <DesktopFormFactor>
+          <!-- This file contains your command handlers -->
+          <FunctionFile resid="Commands.Url"/>
+
+          <ExtensionPoint xsi:type="PrimaryCommandSurface">
+            <!-- Your custom top-level tab -->
+            <CustomTab id="Tab.MyView">
+              <Label resid="TabMyView.Label"/>
+              <Group id="Group.MyView">
+                <Label resid="GroupMyView.Label"/>
+
+                <!-- Button 1: My Basics -->
+                <Control xsi:type="Button" id="Btn.MyBasics">
+                  <Label resid="BtnMyBasics.Label"/>
+                  <Supertip>
+                    <Title resid="BtnMyBasics.Label"/>
+                    <Description resid="BtnMyBasics.Desc"/>
+                  </Supertip>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>onMyBasics</FunctionName>
+                  </Action>
+                </Control>
+
+                <!-- Button 2: All Columns -->
+                <Control xsi:type="Button" id="Btn.AllCols">
+                  <Label resid="BtnAllCols.Label"/>
+                  <Supertip>
+                    <Title resid="BtnAllCols.Label"/>
+                    <Description resid="BtnAllCols.Desc"/>
+                  </Supertip>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>onAllColumns</FunctionName>
+                  </Action>
+                </Control>
+
+              </Group>
+            </CustomTab>
+          </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+
+    <Resources>
+      <bt:Urls>
+        <bt:Url id="Commands.Url" DefaultValue="GHPAGES_BASE/commands.html"/>
+      </bt:Urls>
+
+      <bt:ShortStrings>
+        <bt:String id="TabMyView.Label" DefaultValue="My View"/>
+        <bt:String id="GroupMyView.Label" DefaultValue="Personal"/>
+        <bt:String id="BtnMyBasics.Label" DefaultValue="My Basics"/>
+        <bt:String id="BtnAllCols.Label" DefaultValue="All Columns"/>
+      </bt:ShortStrings>
+
+      <bt:LongStrings>
+        <bt:String id="BtnMyBasics.Desc" DefaultValue="Hide columns C:E (demo)."/>
+        <bt:String id="BtnAllCols.Desc" DefaultValue="Unhide columns A:Z (demo)."/>
+      </bt:LongStrings>
+    </Resources>
+  </VersionOverrides>
+</OfficeApp>
